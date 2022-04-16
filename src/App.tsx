@@ -1,26 +1,43 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { AppShell } from '@mantine/core';
+import { Navbar } from './components/navbar/navbar';
+import { DashboardPage } from './pages/dashboard';
+import { BitcoinDetailsPage } from './pages/bitcoinDetails';
+import { BitcoinCalculatorPage } from './pages/bitcoinCalculator';
+import { Route, Routes } from 'react-router-dom';
+import { BitcoinDiagramPage } from './pages/bitcoinDiagram';
+import { MyProfilePage } from './pages/myProfile';
+import { NavigationRoutes } from './constants/navigation';
+import { Header } from './components/header/header';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
+export const App: React.FunctionComponent = () => {
+	return (
+		<AppShell
+			padding='md'
+			fixed
+			navbar={<Navbar />}
+			header={<Header />}
+			styles={(theme) => ({
+				main: {
+					backgroundColor: theme.colors.gray[0],
+				},
+			})}>
+			<Routes>
+				<Route path={NavigationRoutes.home} element={<DashboardPage />} />
+				<Route
+					path={NavigationRoutes.details}
+					element={<BitcoinDetailsPage />}
+				/>
+				<Route
+					path={NavigationRoutes.calculator}
+					element={<BitcoinCalculatorPage />}
+				/>
+				<Route
+					path={NavigationRoutes.diagram}
+					element={<BitcoinDiagramPage />}
+				/>
+				<Route path={NavigationRoutes.me} element={<MyProfilePage />} />
+			</Routes>
+		</AppShell>
+	);
+};
